@@ -5,6 +5,7 @@ namespace Sefirosweb\LaravelMailing\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Sefirosweb\LaravelMailing\Http\Models\MailingGroup;
 use Sefirosweb\LaravelMailing\Http\Models\MailingList;
 use Sefirosweb\LaravelMailing\Http\Requests\MailingListRequest;
 
@@ -59,6 +60,7 @@ class MailingListController extends Controller
         return response()->json(['success' => true]);
     }
 
+    // CRUD relationship with users
     public function get_array_users()
     {
         $users = User::select([
@@ -70,7 +72,7 @@ class MailingListController extends Controller
 
     public function get_users(Request $request)
     {
-        $mailingList = MailingList::with('users:id,name')->findOrFail($request->primaryKeyId);
+        $mailingList = MailingList::with('users:id,name,email')->findOrFail($request->primaryKeyId);
         return response()->json(['success' => true, 'data' => $mailingList->users]);
     }
 
@@ -85,6 +87,36 @@ class MailingListController extends Controller
     {
         $mailingList = MailingList::findOrFail($request->primaryKeyId);
         $mailingList->users()->detach($request->id);
+        return response()->json(['success' => true]);
+    }
+
+    // CRUD relationship with groups
+    public function get_array_groups()
+    {
+        $users = MailingGroup::select([
+            'id AS value',
+            'name AS name',
+        ])->get();
+        return response()->json(['data' => $users]);
+    }
+
+    public function get_groups(Request $request)
+    {
+        $mailingList = MailingList::with('groups:id,name,to')->findOrFail($request->primaryKeyId);
+        return response()->json(['success' => true, 'data' => $mailingList->groups]);
+    }
+
+    public function add_group(Request $request)
+    {
+        $mailingList = MailingList::findOrFail($request->primaryKeyId);
+        $mailingList->groups()->syncWithoutDetaching($request->name);
+        return response()->json(['success' => true]);
+    }
+
+    public function delete_group(Request $request)
+    {
+        $mailingList = MailingList::findOrFail($request->primaryKeyId);
+        $mailingList->groups()->detach($request->id);
         return response()->json(['success' => true]);
     }
 }

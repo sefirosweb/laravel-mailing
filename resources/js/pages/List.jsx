@@ -62,6 +62,33 @@ const List = () => {
                             {
                                 Header: 'Name',
                                 accessor: 'name'
+                            },
+                            {
+                                Header: 'Email',
+                                accessor: 'email'
+                            },
+                        ],
+                    },
+                    {
+                        accessor: 'groups',
+                        titleOnCRUD: 'Groups',
+                        Header: 'Groups',
+                        editable: true,
+                        type: 'multiselect',
+                        multiSelectOptionsPrimaryKey: 'id',
+                        multiSelectOptionsUrl: `${APP_URL}/mailing_list/groups`,
+                        multiSelectOptionsColumns: [
+                            {
+                                Header: '#',
+                                accessor: 'id'
+                            },
+                            {
+                                Header: 'Group',
+                                accessor: 'name'
+                            },
+                            {
+                                Header: 'To',
+                                accessor: 'to'
                             }
                         ],
                     }

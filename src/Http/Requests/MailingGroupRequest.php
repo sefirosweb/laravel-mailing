@@ -32,6 +32,7 @@ class MailingGroupRequest extends FormRequest
             ],
             'to' => [
                 'required',
+                'email:dns',
                 'min:3',
                 'max:255',
                 'unique:Sefirosweb\LaravelMailing\Http\Models\MailingGroup,to,' . $this->id
