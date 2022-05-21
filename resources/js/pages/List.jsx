@@ -46,6 +46,25 @@ const List = () => {
                         sortable: true,
                         type: 'textarea'
                     },
+                    {
+                        accessor: 'users',
+                        titleOnCRUD: 'Users',
+                        Header: 'Users',
+                        editable: true,
+                        type: 'multiselect',
+                        multiSelectOptionsPrimaryKey: 'id',
+                        multiSelectOptionsUrl: `${APP_URL}/mailing_list/users`,
+                        multiSelectOptionsColumns: [
+                            {
+                                Header: '#',
+                                accessor: 'id'
+                            },
+                            {
+                                Header: 'Name',
+                                accessor: 'name'
+                            }
+                        ],
+                    }
                 ]}
             />
         </>

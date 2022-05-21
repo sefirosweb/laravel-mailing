@@ -11,6 +11,11 @@ Route::group([
     Route::put('mailing_list', 'MailingListController@update');
     Route::delete('mailing_list', 'MailingListController@destroy');
 
+    Route::get('mailing_list/users', 'MailingListController@get_users');
+    Route::post('mailing_list/users', 'MailingListController@add_user');
+    Route::delete('mailing_list/users', 'MailingListController@delete_user');
+    Route::get('mailing_list/users/get_array', 'MailingListController@get_array_users');
+
     Route::get('mailing_group', 'MailingGroupController@get');
     Route::post('mailing_group', 'MailingGroupController@store');
     Route::put('mailing_group', 'MailingGroupController@update');

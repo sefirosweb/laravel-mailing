@@ -4,6 +4,7 @@ namespace Sefirosweb\LaravelMailing\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Sefirosweb\LaravelMailing\Http\Models\MailingList;
 use Sefirosweb\LaravelMailing\Http\Requests\MailingListRequest;
 
@@ -55,6 +56,35 @@ class MailingListController extends Controller
     {
         $mailingList = MailingList::findOrFail($request->id);
         $mailingList->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function get_array_users()
+    {
+        $users = User::select([
+            'id AS value',
+            'name AS name',
+        ])->get();
+        return response()->json(['data' => $users]);
+    }
+
+    public function get_users(Request $request)
+    {
+        $mailingList = MailingList::with('users:id,name')->findOrFail($request->primaryKeyId);
+        return response()->json(['success' => true, 'data' => $mailingList->users]);
+    }
+
+    public function add_user(Request $request)
+    {
+        $mailingList = MailingList::findOrFail($request->primaryKeyId);
+        $mailingList->users()->syncWithoutDetaching($request->name);
+        return response()->json(['success' => true]);
+    }
+
+    public function delete_user(Request $request)
+    {
+        $mailingList = MailingList::findOrFail($request->primaryKeyId);
+        $mailingList->users()->detach($request->id);
         return response()->json(['success' => true]);
     }
 }
