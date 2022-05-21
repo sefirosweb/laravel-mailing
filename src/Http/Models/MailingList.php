@@ -24,6 +24,11 @@ class MailingList extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(MailingGroup::class);
+    }
+
     public function getUpdatedAtAttribute($date)
     {
         $time = new DateTime($date);
