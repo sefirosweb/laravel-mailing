@@ -1,0 +1,26 @@
+{
+    "name": "sefirosweb/laravel-mailing",
+    "description": "Package to help the mailing groups in front end",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Sefirosweb\\LaravelMailing\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sefirosweb",
+            "email": "sefirosweb@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sefirosweb\\LaravelMailing\\LaravelMailingServiceProvider"
+            ]
+        }
+    }
+}
