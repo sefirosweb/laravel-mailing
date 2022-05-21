@@ -2,6 +2,7 @@
 
 namespace Sefirosweb\LaravelMailing\Http\Models;
 
+use App\Models\User;
 use DateTime;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,11 @@ class MailingList extends Model
         'code',
         'description'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 
     public function getUpdatedAtAttribute($date)
     {
