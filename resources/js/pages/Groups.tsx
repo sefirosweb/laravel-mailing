@@ -1,9 +1,8 @@
-import { Crud } from '@sefirosweb/react-crud'
-import React, { useRef } from 'react'
+import React from 'react'
+import { APP_URL } from '@/types/configurationType';
+import { Crud, FieldTypes } from '@sefirosweb/react-crud'
 
-const Groups = () => {
-    const crudRef = useRef();
-
+export default () => {
     return (
         <>
             <h1>Group List</h1>
@@ -11,40 +10,39 @@ const Groups = () => {
                 canDelete
                 canEdit
                 canRefresh
-                canSearch
+                enableGlobalFilter
                 createButtonTitle="Create New Group"
                 crudUrl={`${APP_URL}/mailing_group`}
                 primaryKey="id"
                 titleOnDelete="name"
-                ref={crudRef}
                 columns={[
                     {
-                        Header: '#',
-                        accessor: 'id',
-                        sortable: true,
+                        header: '#',
+                        accessorKey: 'id',
+                        enableSorting: true,
                         visible: true
                     },
                     {
-                        accessor: 'name',
-                        Header: 'Name',
+                        accessorKey: 'name',
+                        header: 'Name',
                         titleOnCRUD: 'Name',
                         editable: true,
-                        sortable: true,
+                        enableSorting: true,
                     },
                     {
-                        accessor: 'to',
+                        accessorKey: 'to',
                         titleOnCRUD: 'To',
-                        Header: 'To',
+                        header: 'To',
                         editable: true,
-                        sortable: true,
+                        enableSorting: true,
                     },
                     {
-                        accessor: 'description',
+                        accessorKey: 'description',
                         titleOnCRUD: 'Description',
-                        Header: 'Description',
+                        header: 'Description',
                         editable: true,
-                        sortable: true,
-                        type: 'textarea'
+                        enableSorting: true,
+                        fieldType: FieldTypes.TEXTAREA
                     },
                 ]}
             />
@@ -52,5 +50,3 @@ const Groups = () => {
         </>
     );
 }
-
-export default Groups;

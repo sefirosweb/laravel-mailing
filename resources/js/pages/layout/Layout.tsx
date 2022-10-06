@@ -1,6 +1,7 @@
+import React from 'react'
 import Navbar from '@/pages/layout/Navbar';
 
-const Example = ({ children }) => {
+export default ({ children }) => {
     return (
         <>
             <Navbar />
@@ -10,6 +11,4 @@ const Example = ({ children }) => {
         </>
     );
 }
-
-export default Example;
 

@@ -15,7 +15,7 @@ const path = require("path");
 mix
   .setPublicPath(process.env.ASSET_PATH)
   .setResourceRoot('/laravel-mailing')
-  .js('resources/js/app.js', 'js')
+  .ts('resources/js/app.tsx', 'js')
   .sass('resources/sass/app.scss', 'css')
   .react()
   .webpackConfig({
