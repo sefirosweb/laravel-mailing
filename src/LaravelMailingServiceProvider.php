@@ -16,7 +16,7 @@ class LaravelMailingServiceProvider extends ServiceProvider
         $this->registerRoutes();
 
         $this->publishes([
-            __DIR__ . '/../public/vendor/laravel-mailing' => public_path('vendor/laravel-mailing'),
+            __DIR__ . '/../public' => public_path('vendor/laravel-mailing'),
         ], 'view');
 
         $this->publishes([
