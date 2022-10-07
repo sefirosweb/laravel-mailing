@@ -1,19 +1,22 @@
 import React from 'react'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 /* Pages */
-import NotFound from "@/pages/NotFound";
+import { APP_PREFIX } from "@/types/configurationType";
 import List from "@/pages/List";
 import Groups from "@/pages/Groups";
-import { APP_PREFIX } from "@/types/configurationType";
+import NotFound from "@/pages/NotFound";
+import Layout from '@/pages/layout/Layout';
 
 function RoutesPages() {
     return (
         <Routes>
-            <Route path={`/${APP_PREFIX}`} element={<List />} />
-            <Route path={`/${APP_PREFIX}/list`} element={<List />} />
-            <Route path={`/${APP_PREFIX}/groups`} element={<Groups />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path={`${APP_PREFIX}/`} element={<Layout />}>
+                <Route index element={<Navigate replace to={`list`} />} />
+                <Route path={`list`} element={<List />} />
+                <Route path={`groups`} element={<Groups />} />
+                <Route path="*" element={<NotFound />} />
+            </Route>
         </Routes>
     );
 }

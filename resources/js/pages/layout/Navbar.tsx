@@ -1,19 +1,22 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import { Container, Nav, Navbar } from "react-bootstrap";
-
 import { APP_PREFIX } from '@/types/configurationType';
+// import { NavLink } from 'react-router-dom';
+import NavLink from '@/components/NavLink';
+
+
 
 const CustomNavbar = () => {
+
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar collapseOnSelect expand="sm">
             <Container>
-                <Navbar.Brand href="#home">Laravel Mailing Group System</Navbar.Brand>
+                <Navbar.Brand>Laravel Mailing Group System</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link as={Link} to={`/${APP_PREFIX}/list`}>List</Nav.Link>
-                        <Nav.Link as={Link} to={`/${APP_PREFIX}/groups`}>Groups</Nav.Link>
+                    <Nav className="me-auto" activeKey={window.location.pathname}>
+                        <Nav.Link as={NavLink} to={`/${APP_PREFIX}/list`} eventKey="1">List</Nav.Link>
+                        <Nav.Link as={NavLink} to={`/${APP_PREFIX}/groups`} eventKey="2">Groups</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end">
@@ -23,7 +26,7 @@ const CustomNavbar = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-        </Navbar>
+        </Navbar >
     )
 }
 
