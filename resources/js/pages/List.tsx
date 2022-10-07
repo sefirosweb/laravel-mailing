@@ -9,6 +9,7 @@ export default () => {
         primaryKey: 'id',
         url: `${APP_URL}/mailing_list/users`,
         getDataUrl: `${APP_URL}/mailing_list/users/get_array`,
+        title: "Add user to mailing list",
         columns: [
             {
                 header: '#',
@@ -29,6 +30,7 @@ export default () => {
         primaryKey: 'id',
         url: `${APP_URL}/mailing_list/groups`,
         getDataUrl: `${APP_URL}/mailing_list/groups/get_array`,
+        title: "Add group to mailing list",
         columns: [
             {
                 header: '#',
@@ -76,7 +78,7 @@ export default () => {
         },
         {
             header: 'Users',
-            accessorKey: 'users',
+            id: 'users',
             titleOnCRUD: 'Users',
             editable: true,
             fieldType: FieldTypes.MULTISELECT,

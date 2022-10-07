@@ -26,13 +26,13 @@ class MailingListRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'min:3',
+                'min:2',
                 'max:255',
                 'unique:Sefirosweb\LaravelMailing\Http\Models\MailingList,name,' . $this->id
             ],
             'code' => [
                 'required',
-                'min:3',
+                'min:2',
                 'max:255',
                 'unique:Sefirosweb\LaravelMailing\Http\Models\MailingList,code,' . $this->id
             ],

@@ -79,14 +79,14 @@ class MailingListController extends Controller
     public function add_user(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->primaryKeyId);
-        $mailingList->users()->syncWithoutDetaching($request->name);
+        $mailingList->users()->syncWithoutDetaching($request->name['value']);
         return response()->json(['success' => true]);
     }
 
     public function delete_user(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->primaryKeyId);
-        $mailingList->users()->detach($request->id);
+        $mailingList->users()->detach($request->idDataField);
         return response()->json(['success' => true]);
     }
 

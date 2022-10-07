@@ -38,7 +38,7 @@ class MailingGroupController extends Controller
      * @param  Sefirosweb\LaravelMailing\Http\Models\AccessList $accessList
      * @return \Illuminate\Http\Response
      */
-    public function update(MailingGroupRequest $request, MailingGroup $mailingList)
+    public function update(MailingGroupRequest $request)
     {
         $accessList = MailingGroup::findOrFail($request->id);
         $accessList->update($request->all());
