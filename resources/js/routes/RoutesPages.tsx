@@ -8,7 +8,7 @@ import Groups from "@/pages/Groups";
 import NotFound from "@/pages/NotFound";
 import Layout from '@/pages/layout/Layout';
 
-function RoutesPages() {
+export default () => {
     return (
         <Routes>
             <Route path={`${APP_PREFIX}/`} element={<Layout />}>
@@ -20,5 +20,3 @@ function RoutesPages() {
         </Routes>
     );
 }
-
-export default RoutesPages;
