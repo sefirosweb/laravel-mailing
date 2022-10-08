@@ -5,5 +5,4 @@ type User = {
     email_verified_at: string /* Date */;
     created_at: string /* Date */ | null;
     updated_at: string /* Date */ | null;
-    is_active: number;
 }

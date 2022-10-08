@@ -109,14 +109,14 @@ class MailingListController extends Controller
     public function add_group(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->primaryKeyId);
-        $mailingList->groups()->syncWithoutDetaching($request->name);
+        $mailingList->groups()->syncWithoutDetaching($request->name['value']);
         return response()->json(['success' => true]);
     }
 
     public function delete_group(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->primaryKeyId);
-        $mailingList->groups()->detach($request->id);
+        $mailingList->groups()->detach($request->idDataField);
         return response()->json(['success' => true]);
     }
 }
