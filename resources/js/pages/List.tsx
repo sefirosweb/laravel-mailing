@@ -1,8 +1,10 @@
 import React, { useRef } from 'react'
 import { APP_URL } from '@/types/configurationType';
 import { ColumnDefinition, Crud, FieldTypes, MultiSelectOptionsColumns } from '@sefirosweb/react-crud'
+import { useTranslation } from 'react-i18next';
 
 export default () => {
+    const { t } = useTranslation()
     const crudRef = useRef();
 
     const multiSelectUser: MultiSelectOptionsColumns<User> = {
@@ -55,40 +57,40 @@ export default () => {
             visible: true
         },
         {
-            header: 'Name',
             accessorKey: 'name',
-            titleOnCRUD: 'Name',
+            header: t('Name'),
+            titleOnCRUD: t('Name'),
             editable: true,
             enableSorting: true,
         },
         {
-            header: 'Code',
             accessorKey: 'code',
-            titleOnCRUD: 'Code',
+            header: t('Code'),
+            titleOnCRUD: t('Code'),
             editable: true,
             enableSorting: true,
         },
         {
-            header: 'Description',
             accessorKey: 'description',
-            titleOnCRUD: 'Description',
+            header: t('Description'),
+            titleOnCRUD: t('Description'),
             editable: true,
             enableSorting: true,
             fieldType: FieldTypes.TEXTAREA
         },
         {
-            header: 'Users',
             id: 'users',
-            titleOnCRUD: 'Users',
+            header: t('Users'),
+            titleOnCRUD: t('Users'),
             editable: true,
             fieldType: FieldTypes.MULTISELECT,
             multiSelectOptions: multiSelectUser
 
         },
         {
-            header: 'Groups',
-            id: 'groups', // TODO
-            titleOnCRUD: 'Groups',
+            id: 'groups',
+            header: t('Grupos'),
+            titleOnCRUD: t('Grupos'),
             editable: true,
             fieldType: FieldTypes.MULTISELECT,
             multiSelectOptions: multiSelectGroup
@@ -97,13 +99,13 @@ export default () => {
 
     return (
         <>
-            <h1>Mailing List</h1>
+            <h1>{t('List')}</h1>
             <Crud
                 canDelete
                 canEdit
                 canRefresh
                 enableGlobalFilter
-                createButtonTitle="Create New Mailing List"
+                createButtonTitle={t('button.create_new_list')}
                 crudUrl={`${APP_URL}/mailing_list`}
                 primaryKey="id"
                 titleOnDelete="name"

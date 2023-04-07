@@ -1,17 +1,20 @@
 import React from 'react'
 import { APP_URL } from '@/types/configurationType';
 import { Crud, FieldTypes } from '@sefirosweb/react-crud'
+import { useTranslation } from 'react-i18next';
 
 export default () => {
+    const { t } = useTranslation()
+
     return (
         <>
-            <h1>Group List</h1>
+            <h1>{t('Groups')}</h1>
             <Crud
                 canDelete
                 canEdit
                 canRefresh
                 enableGlobalFilter
-                createButtonTitle="Create New Group"
+                createButtonTitle={t('button.create_new_group')}
                 crudUrl={`${APP_URL}/mailing_group`}
                 primaryKey="id"
                 titleOnDelete="name"
@@ -24,22 +27,22 @@ export default () => {
                     },
                     {
                         accessorKey: 'name',
-                        header: 'Name',
-                        titleOnCRUD: 'Name',
+                        header: t('Name'),
+                        titleOnCRUD: t('Name'),
                         editable: true,
                         enableSorting: true,
                     },
                     {
                         accessorKey: 'to',
-                        titleOnCRUD: 'To',
-                        header: 'To',
+                        titleOnCRUD: t('To'),
+                        header: t('To'),
                         editable: true,
                         enableSorting: true,
                     },
                     {
                         accessorKey: 'description',
-                        titleOnCRUD: 'Description',
-                        header: 'Description',
+                        titleOnCRUD: t('Description'),
+                        header: t('Description'),
                         editable: true,
                         enableSorting: true,
                         fieldType: FieldTypes.TEXTAREA

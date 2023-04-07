@@ -1,11 +1,10 @@
 import React from 'react'
 import { Routes, Route, Navigate } from "react-router-dom";
 
-/* Pages */
 import { APP_PREFIX } from "@/types/configurationType";
 import List from "@/pages/List";
 import Groups from "@/pages/Groups";
-import NotFound from "@/pages/NotFound";
+import { NotFound } from "@/pages/NotFound";
 import Layout from '@/pages/layout/Layout';
 
 export default () => {
