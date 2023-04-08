@@ -17,7 +17,7 @@ class LaravelMailingServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../public/bundle' => public_path('vendor/laravel-mailing'),
-        ], ['acl-assets', 'laravel-assets']);
+        ], ['mailing-assets', 'laravel-assets']);
 
         $this->publishes([
             __DIR__ . '/config/config.php' => config_path('laravel-mailing.php'),

@@ -35,10 +35,16 @@ Install database migrations
 php artisan migrate
 ```
 
-Publish React front and config:
+Publish frontend:
 
 ```
-php artisan vendor:publish --provider="Sefirosweb\LaravelMailing\LaravelMailingServiceProvider" --force
+php artisan vendor:publish --provider="Sefirosweb\LaravelMailing\LaravelMailingServiceProvider" --tag=mailing-assets --force
+```
+
+Publish config:
+
+```
+php artisan vendor:publish --provider="Sefirosweb\LaravelMailing\LaravelMailingServiceProvider" --tag=config --force
 ```
 
 ## <strong>Please securize this path with middleware</strong>
