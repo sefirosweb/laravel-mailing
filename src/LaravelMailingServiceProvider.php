@@ -16,18 +16,12 @@ class LaravelMailingServiceProvider extends ServiceProvider
         $this->registerRoutes();
 
         $this->publishes([
-            __DIR__ . '/../public' => public_path('vendor/laravel-mailing'),
-        ], 'view');
+            __DIR__ . '/../public/bundle' => public_path('vendor/laravel-mailing'),
+        ], ['acl-assets', 'laravel-assets']);
 
         $this->publishes([
             __DIR__ . '/config/config.php' => config_path('laravel-mailing.php'),
         ], 'config');
-
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                DispatchMailJob::class
-            ]);
-        }
     }
 
 

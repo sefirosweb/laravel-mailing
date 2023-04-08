@@ -14,9 +14,19 @@ class MailingGroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get()
+    public function get(Request $request)
     {
-        return response()->json(['success' => true, 'data' => MailingGroup::all()]);
+        $query = MailingGroup::query();
+
+        if ($request->status === 'all') {
+            $query->withTrashed();
+        } else  if ($request->status === 'deleted') {
+            $query->onlyTrashed();
+        }
+
+        $data = $query->get();
+
+        return response()->json(['success' => true, 'data' => $data]);
     }
 
     /**
@@ -40,7 +50,7 @@ class MailingGroupController extends Controller
      */
     public function update(MailingGroupRequest $request)
     {
-        $accessList = MailingGroup::findOrFail($request->id);
+        $accessList = MailingGroup::withTrashed()->findOrFail($request->mailing_groups_id);
         $accessList->update($request->all());
         return response()->json(['success' => true]);
     }
@@ -53,8 +63,12 @@ class MailingGroupController extends Controller
      */
     public function destroy(Request $request)
     {
-        $mailingList = MailingGroup::findOrFail($request->id);
-        $mailingList->delete();
+        $mailingList = MailingGroup::withTrashed()->findOrFail($request->mailing_groups_id);
+        if (!$mailingList->deleted_at) {
+            $mailingList->delete();
+        } else {
+            $mailingList->restore();
+        }
         return response()->json(['success' => true]);
     }
 }
