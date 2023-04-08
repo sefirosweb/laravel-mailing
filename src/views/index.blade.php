@@ -17,7 +17,7 @@
     </script>
 
     {{ Vite::useHotFile(storage_path('app/vite_mailing.hot'))
-    ->useBuildDirectory('vendor/laravel-access-list')
+    ->useBuildDirectory('vendor/laravel-mailing')
     ->withEntryPoints(['resources/js/app.tsx']) }}
 
 </body>
