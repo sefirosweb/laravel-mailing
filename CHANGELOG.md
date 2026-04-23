@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [12.0.2] - 2026-04-23
+
+### Changed
+- Enabled `declare(strict_types=1);` on every PHP file under `src/`. Tests (18/51) pass unchanged.
+- The four migrations' `/** @return void */` docblocks on `up()` / `down()` methods have been replaced with the native `: void` return type.
+
 ## [12.0.1] - 2026-04-23
 
 ### Added
