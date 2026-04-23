@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sefirosweb\LaravelMailing\Http\Helpers;
 
 use Sefirosweb\LaravelMailing\Http\Models\MailingList as ModelsMailingList;

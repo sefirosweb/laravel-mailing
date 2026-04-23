@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sefirosweb\LaravelMailing;
 
 use Illuminate\Support\Facades\Route;

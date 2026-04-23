@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use Sefirosweb\LaravelMailing\Http\Controllers\MailingGroupController;
 use Sefirosweb\LaravelMailing\Http\Controllers\MailingListController;
