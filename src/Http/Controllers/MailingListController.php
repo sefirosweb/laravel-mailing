@@ -52,8 +52,8 @@ class MailingListController extends Controller
      */
     public function update(MailingListRequest $request)
     {
-        $accessList = MailingList::withTrashed()->findOrFail($request->mailing_lists_id);
-        $accessList->update($request->all());
+        $mailingList = MailingList::withTrashed()->findOrFail($request->mailing_lists_id);
+        $mailingList->update($request->all());
         return response()->json(['success' => true]);
     }
 

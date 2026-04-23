@@ -32,7 +32,7 @@ class MailingGroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\MailingGroupRequest $request
+     * @param  \Sefirosweb\LaravelMailing\Http\Requests\MailingGroupRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(MailingGroupRequest $request)
@@ -44,30 +44,29 @@ class MailingGroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\MailingGroupRequest $request
-     * @param  Sefirosweb\LaravelMailing\Http\Models\AccessList $accessList
+     * @param  \Sefirosweb\LaravelMailing\Http\Requests\MailingGroupRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function update(MailingGroupRequest $request)
     {
-        $accessList = MailingGroup::withTrashed()->findOrFail($request->mailing_groups_id);
-        $accessList->update($request->all());
+        $mailingGroup = MailingGroup::withTrashed()->findOrFail($request->mailing_groups_id);
+        $mailingGroup->update($request->all());
         return response()->json(['success' => true]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft-delete / restore the specified mailing group.
      *
-     * @param  \Sefirosweb\LaravelMailing\Http\Models\AccessList $accessList
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        $mailingList = MailingGroup::withTrashed()->findOrFail($request->mailing_groups_id);
-        if (!$mailingList->deleted_at) {
-            $mailingList->delete();
+        $mailingGroup = MailingGroup::withTrashed()->findOrFail($request->mailing_groups_id);
+        if (!$mailingGroup->deleted_at) {
+            $mailingGroup->delete();
         } else {
-            $mailingList->restore();
+            $mailingGroup->restore();
         }
         return response()->json(['success' => true]);
     }

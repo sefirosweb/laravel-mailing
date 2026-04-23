@@ -23,18 +23,20 @@ class MailingListRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->input('mailing_lists_id', $this->input('id'));
+
         return [
             'name' => [
                 'required',
                 'min:2',
                 'max:255',
-                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingList,name,' . $this->id
+                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingList,name,' . $id,
             ],
             'code' => [
                 'required',
                 'min:2',
                 'max:255',
-                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingList,code,' . $this->id
+                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingList,code,' . $id,
             ],
             'description' => [
                 'max:255',

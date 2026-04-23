@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sefirosweb\LaravelMailing\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
@@ -31,6 +33,8 @@ abstract class TestCase extends OrchestraTestCase
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

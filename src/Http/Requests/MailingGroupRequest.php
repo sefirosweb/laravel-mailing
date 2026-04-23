@@ -23,19 +23,21 @@ class MailingGroupRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->input('mailing_groups_id', $this->input('id'));
+
         return [
             'name' => [
                 'required',
                 'min:2',
                 'max:255',
-                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingGroup,name,' . $this->id
+                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingGroup,name,' . $id,
             ],
             'to' => [
                 'required',
                 'email:dns',
                 'min:2',
                 'max:255',
-                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingGroup,to,' . $this->id
+                'unique:Sefirosweb\LaravelMailing\Http\Models\MailingGroup,to,' . $id,
             ],
             'description' => [
                 'max:255',

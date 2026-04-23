@@ -32,13 +32,11 @@ class MailingList extends Model
 
     public function getUpdatedAtAttribute($date)
     {
-        $time = new DateTime($date);
-        return $time->format('Y-m-d H:i:s');
+        return $date ? (new DateTime($date))->format('Y-m-d H:i:s') : null;
     }
 
     public function getCreatedAtAttribute($date)
     {
-        $time = new DateTime($date);
-        return $time->format('Y-m-d H:i:s');
+        return $date ? (new DateTime($date))->format('Y-m-d H:i:s') : null;
     }
 }
