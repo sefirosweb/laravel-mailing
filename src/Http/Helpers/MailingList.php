@@ -8,14 +8,21 @@ use Sefirosweb\LaravelMailing\Http\Models\MailingList as ModelsMailingList;
 
 class MailingList
 {
-    public static function get($code)
+    /**
+     * @return list<string>
+     */
+    public static function get(string $code): array
     {
         if (config('app.env') !== 'production') {
             $to = config('laravel-mailing.stage_to');
             return [$to];
         }
 
-        if (!$mailingList = ModelsMailingList::with('users:email', 'groups:to')->where('code', $code)->get()->first()) {
+        $mailingList = ModelsMailingList::with('users:email', 'groups:to')
+            ->where('code', $code)
+            ->first();
+
+        if ($mailingList === null) {
             return [];
         }
 
@@ -23,8 +30,6 @@ class MailingList
         $users = array_column($mailingList['users'], 'email');
         $groups = array_column($mailingList['groups'], 'to');
 
-        $emailList = array_unique(array_merge($users, $groups));
-
-        return $emailList;
+        return array_values(array_unique(array_merge($users, $groups)));
     }
 }

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [12.0.3] - 2026-04-23
+
+### Changed
+- `MailingList::get($code)` → `get(string $code): array` — explicit parameter and return types.
+
 ## [12.0.2] - 2026-04-23
 
 ### Changed
