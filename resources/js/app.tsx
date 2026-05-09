@@ -5,8 +5,9 @@ import { useGroups } from '@/hooks/useGroups';
 import { useLists } from '@/hooks/useLists';
 import '@/lib/i18n';
 import { Groups } from '@/pages/groups/Groups';
-import { Lists } from '@/pages/lists/Lists';
+import { AppFooter } from '@/pages/layout/AppFooter';
 import { Tab, TopNav } from '@/pages/layout/TopNav';
+import { Lists } from '@/pages/lists/Lists';
 import { ToastProvider } from '@/ui/Toast';
 import '@styles/app.scss';
 
@@ -51,6 +52,7 @@ const Shell = () => {
                 {tab === 'lists' && <Lists />}
                 {tab === 'groups' && <Groups />}
             </main>
+            <AppFooter />
         </ToastProvider>
     );
 };

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [13.0.2] - 2026-05-09
+
+### Added
+- **Back-to-app** arrow in the top nav. Returns the user to the host's `/` so the package UI no longer feels like a dead-end embedded site.
+- **Footer** with attribution and a link to the package repo on GitHub (`sefirosweb/laravel-mailing`).
+- New `IconArrowLeft` and `IconBrandGithub` icons.
+- Translations: `nav.backToApp`, `footer.builtBy`, `footer.viewSource` (ES + EN).
+
 ## [13.0.1] - 2026-05-09
 
 This release pairs a complete rewrite of the bundled admin UI with backend hardening that removes the implicit dependency on `App\Models\User`. The package surface is unchanged for consumers calling `MailingList::get($code)` from PHP — upgrading is just `composer update` + republish of `mailing-assets`.

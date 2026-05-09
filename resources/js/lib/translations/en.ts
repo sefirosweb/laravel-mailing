@@ -3,6 +3,11 @@ export const en = {
         appName: 'Mailing',
         lists: 'Lists',
         groups: 'Groups',
+        backToApp: 'Back to app',
+    },
+    footer: {
+        builtBy: 'Built by',
+        viewSource: 'View source on GitHub',
     },
     common: {
         save: 'Save changes',
