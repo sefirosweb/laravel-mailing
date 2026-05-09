@@ -6,7 +6,6 @@ namespace Sefirosweb\LaravelMailing\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Sefirosweb\LaravelMailing\Http\Models\MailingGroup;
 use Sefirosweb\LaravelMailing\Http\Models\MailingList;
 use Sefirosweb\LaravelMailing\Http\Requests\MailingListRequest;
@@ -14,18 +13,16 @@ use Sefirosweb\LaravelMailing\Http\Requests\MailingListRequest;
 class MailingListController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * List mailing lists, with eager-loaded counts to avoid N+1
+     * when the bundled UI renders the per-row badges.
      */
     public function get(Request $request)
     {
-        $query = MailingList::query();
+        $query = MailingList::query()->withCount(['users', 'groups']);
 
         if ($request->status === 'all') {
             $query->withTrashed();
-        } else  if ($request->status === 'deleted') {
+        } else if ($request->status === 'deleted') {
             $query->onlyTrashed();
         }
 
@@ -34,24 +31,12 @@ class MailingListController extends Controller
         return response()->json(['success' => true, 'data' => $data]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Sefirosweb\LaravelMailing\Http\Requests\MailingListRequest $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(MailingListRequest $request)
     {
         MailingList::create($request->all());
         return response()->json(['success' => true]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Sefirosweb\LaravelMailing\Http\Requests\MailingListRequest $request
-     * @return \Illuminate\Http\Response
-     */
     public function update(MailingListRequest $request)
     {
         $mailingList = MailingList::withTrashed()->findOrFail($request->mailing_lists_id);
@@ -60,10 +45,7 @@ class MailingListController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * Toggle soft-delete / restore for the requested mailing list.
      */
     public function destroy(Request $request)
     {
@@ -77,38 +59,32 @@ class MailingListController extends Controller
     }
 
     /**
-     * Get list of users in array
-     *
-     * @return \Illuminate\Http\Response
+     * Resolve the configured User model class. Falls back to
+     * App\Models\User so existing hosts keep working without
+     * publishing the config.
      */
+    protected function userModel(): string
+    {
+        return config('laravel-mailing.User', \App\Models\User::class);
+    }
+
     public function get_array_users()
     {
-        $users = User::select([
-            'id',
-            'id AS value',
-            'name AS name',
-        ])->get();
+        $UserClass = $this->userModel();
+        $users = $UserClass::query()
+            ->select('id', 'name')
+            ->selectRaw('id AS value')
+            ->get();
+
         return response()->json(['data' => $users]);
     }
 
-    /**
-     * Get list of users of current Mailing List
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function get_users(Request $request)
     {
         $mailingList = MailingList::with('users:id,name,email')->findOrFail($request->mailing_lists_id);
         return response()->json(['success' => true, 'data' => $mailingList->users]);
     }
 
-    /**
-     * Add user into Mailing List
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function add_user(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->mailing_lists_id);
@@ -116,12 +92,6 @@ class MailingListController extends Controller
         return response()->json(['success' => true]);
     }
 
-    /**
-     * Remove use of Mailing List
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function delete_user(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->mailing_lists_id);
@@ -129,39 +99,24 @@ class MailingListController extends Controller
         return response()->json(['success' => true]);
     }
 
-    /**
-     * Get list of groups in array
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function get_array_groups()
     {
-        $users = MailingGroup::select([
+        $groups = MailingGroup::select([
             'id',
             'id AS value',
             'name AS name',
+            'to',
         ])->get();
-        return response()->json(['data' => $users]);
+
+        return response()->json(['data' => $groups]);
     }
 
-    /**
-     * Get groups of Mailing List
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function get_groups(Request $request)
     {
         $mailingList = MailingList::with('groups:id,name,to')->findOrFail($request->mailing_lists_id);
         return response()->json(['success' => true, 'data' => $mailingList->groups]);
     }
 
-    /**
-     * Add group into Mailing List
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function add_group(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->mailing_lists_id);
@@ -169,12 +124,6 @@ class MailingListController extends Controller
         return response()->json(['success' => true]);
     }
 
-    /**
-     * Remove group of Mailing List
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function delete_group(Request $request)
     {
         $mailingList = MailingList::findOrFail($request->mailing_lists_id);

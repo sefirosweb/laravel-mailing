@@ -6,14 +6,14 @@ Typical flow: create a list, add local users to it, optionally add an external m
 
 ## Requirements
 
-- PHP `^8.2`
-- Laravel `^12.0`
-- A `users` table in your host app (the package's `MailingList` belongs to many `App\Models\User`).
+- PHP `^8.3`
+- Laravel `^13.0`
+- A `users` table in your host app. The `MailingList` model attaches users via `belongsToMany` to a configurable User class (defaults to `App\Models\User`, see [Configuration](#configuration)).
 
 ## Installation
 
 ```bash
-composer require sefirosweb/laravel-mailing:^12.0
+composer require sefirosweb/laravel-mailing:^13.0
 ```
 
 The service provider auto-registers via Laravel's package discovery.
@@ -41,12 +41,14 @@ return [
     'prefix'     => 'mailgroups',
     'middleware' => 'web',
     'stage_to'   => env('MAIL_LIST_STAGE_TO', 'Create "MAIL_LIST_STAGE_TO" in .env with default mail'),
+    'User'       => \App\Models\User::class,
 ];
 ```
 
 - `prefix`: URL prefix for the bundled admin UI (`/mailgroups/...`).
 - `middleware`: middleware stack for those routes.
 - `stage_to`: a single email address used in non-production environments — see [Environment-aware recipients](#environment-aware-recipients) below.
+- `User`: the Eloquent model used as the user side of the `mailing_list_user` pivot. Override to point the package at your custom User model without forking it.
 
 > ⚠️ **Security**: the admin UI manages mailing recipients. Always protect it with auth + an ACL check. If you use [`sefirosweb/laravel-access-list`](https://github.com/sefirosweb/laravel-access-list):
 >
@@ -64,9 +66,20 @@ php artisan vendor:publish --provider="Sefirosweb\LaravelMailing\LaravelMailingS
 
 ### 1. Create lists and groups from the UI
 
-Browse to `/mailgroups` (or the configured prefix):
+Browse to `/mailgroups` (or the configured prefix). The bundled UI is a self-contained React 19 + Vite SPA with two top-level tabs:
 
-- **Mailing list**: a named collection addressed by a **code** (machine identifier used from code). Attach internal users to a list by searching their name.
+- **Listas** — table of mailing lists with name / code / description and a counter for users + groups attached. Each row opens two relations drawers (Users, Groups) for live attach/detach with optimistic updates. Soft-delete UI with an Activos / Todos / Eliminados segmented filter and a Restore action.
+- **Grupos** — table of mailing groups (reusable external recipients with `name` + `to`). Same soft-delete UX.
+
+Both tables ship with debounced search (200 ms), client-side pagination and per-row spinners on in-flight toggles. Hash routing keeps tabs deep-linkable (`/mailgroups/#lists`, `/mailgroups/#groups`). i18n with browser language detection (ES / EN) plus a manual switcher in the top nav.
+
+![Listas](docs/screenshots/lists.png)
+![Grupos](docs/screenshots/groups.png)
+![Drawer de usuarios de una lista](docs/screenshots/list-users-drawer.png)
+
+Definitions:
+
+- **Mailing list**: a named collection addressed by a **code** (machine identifier used from code). Attach internal users by searching their name.
 - **Mailing group**: a reusable external recipient with `name` + `to` (email). Add groups to a list when you need to email someone who is not a user in your system.
 
 ### 2. Resolve recipients from code
